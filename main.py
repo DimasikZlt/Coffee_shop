@@ -4,9 +4,11 @@ import sys
 from PyQt5 import uic, QtWidgets, QtCore
 from PyQt5.QtWidgets import QApplication, QWidget, QTableWidgetItem, \
     QMessageBox, QDialog
+from main_ui import Ui_Form
+from addEditCoffeeForm_ui import Ui_Dialog
 
 
-class CoffeeDataInput(QDialog):
+class CoffeeDataInput(QDialog, Ui_Dialog):
     def __init__(self, parent, is_new_record: bool = True):
         super().__init__(parent)
         self.setModal(True)
@@ -14,7 +16,8 @@ class CoffeeDataInput(QDialog):
         self.db = parent.db
         self.is_new = is_new_record
         self.cb_items = None
-        uic.loadUi('addEditCoffeeForm.ui', self)
+        # uic.loadUi('addEditCoffeeForm.ui', self)
+        self.setupUi(self)
         self.accepted.connect(self.save_coffee_item)
 
     def get_items_for_combobox(self):
@@ -95,12 +98,13 @@ class CoffeeDataInput(QDialog):
         self.parent_window.show_table()
 
 
-class MainWindow(QWidget):
+class MainWindow(QWidget, Ui_Form):
     def __init__(self):
         super().__init__()
-        uic.loadUi('main.ui', self)
+        # uic.loadUi('main.ui', self)
+        self.setupUi(self)
         self.setMinimumSize(QtCore.QSize(810, 600))
-        self.db = sqlite3.connect('coffee.sqlite')
+        self.db = sqlite3.connect('data/coffee.sqlite')
         self.show_table()
         self.btn_add.clicked.connect(self.add_new_record)
         self.btn_edit.clicked.connect(self.edit_record)
