@@ -104,7 +104,7 @@ class MainWindow(QWidget, Ui_Form):
         # uic.loadUi('main.ui', self)
         self.setupUi(self)
         self.setMinimumSize(QtCore.QSize(810, 600))
-        self.db = sqlite3.connect('data/coffee.sqlite')
+        self.db = sqlite3.connect('../data/coffee.sqlite')
         self.show_table()
         self.btn_add.clicked.connect(self.add_new_record)
         self.btn_edit.clicked.connect(self.edit_record)
